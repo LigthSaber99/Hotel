@@ -3,16 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotelería</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Hotel Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://source.unsplash.com/1600x900/?hotel,resort') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        header {
+            background-color: rgba(0, 64, 128, 0.9);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            border-bottom: 2px solid gold;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: gold;
+        }
+        .search {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid gold;
+            border-radius: 10px;
+            background-color: rgba(248, 249, 250, 0.9);
+            color: black;
+        }
+        .search input {
+            padding: 12px;
+            width: 280px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .search button {
+            padding: 12px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .search button:hover {
+            background-color: #002d5a;
+        }
+        .hotel-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .hotel-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid gold;
+            color: black;
+        }
+        .hotel-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .hotel-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Bienvenido a Nuestro Hotel</h1>
+        <h1>Reserva tu hotel ideal</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Hoteles</a></li>
+                <li><a href="#">Ofertas</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
     </header>
-    <section>
-        <p>Disfruta de una estadía de lujo con los mejores servicios.</p>
-    </section>
-    <script src="script.js"></script>
+    <main>
+        <section class="search">
+            <input type="text" id="searchBar" placeholder="Buscar destino">
+            <button onclick="buscarHotel()">Buscar</button>
+        </section>
+        <section id="hoteles" class="hotel-list"></section>
+    </main>
+    <script>
+        const hoteles = [
+            { nombre: "Hotel Paraíso", imagen: "https://via.placeholder.com/300", descripcion: "Un hotel con vista espectacular" },
+            { nombre: "Hotel Relax", imagen: "https://via.placeholder.com/300", descripcion: "Descansa con todo el confort" },
+            { nombre: "Hotel Aventura", imagen: "https://via.placeholder.com/300", descripcion: "Ideal para los amantes de la aventura" },
+            { nombre: "Hotel Playa Azul", imagen: "https://via.placeholder.com/300", descripcion: "Frente al mar con acceso privado" },
+            { nombre: "Hotel Montaña Verde", imagen: "https://via.placeholder.com/300", descripcion: "Naturaleza y tranquilidad en un solo lugar" },
+            { nombre: "Hotel Urbano", imagen: "https://via.placeholder.com/300", descripcion: "Ubicación céntrica y moderna" }
+        ];
+        
+        function mostrarHoteles() {
+            const contenedor = document.getElementById("hoteles");
+            contenedor.innerHTML = "";
+            hoteles.forEach(hotel => {
+                const hotelCard = document.createElement("div");
+                hotelCard.classList.add("hotel-card");
+                hotelCard.innerHTML = `
+                    <img src="${hotel.imagen}" alt="${hotel.nombre}">
+                    <h3>${hotel.nombre}</h3>
+                    <p>${hotel.descripcion}</p>
+                `;
+                contenedor.appendChild(hotelCard);
+            });
+        }
+        
+        function buscarHotel() {
+            const termino = document.getElementById("searchBar").value.toLowerCase();
+            const hotelesFiltrados = hoteles.filter(hotel => hotel.nombre.toLowerCase().includes(termino));
+            const contenedor = document.getElementById("hoteles");
+            contenedor.innerHTML = "";
+            hotelesFiltrados.forEach(hotel => {
+                const hotelCard = document.createElement("div");
+                hotelCard.classList.add("hotel-card");
+                hotelCard.innerHTML = `
+                    <img src="${hotel.imagen}" alt="${hotel.nombre}">
+                    <h3>${hotel.nombre}</h3>
+                    <p>${hotel.descripcion}</p>
+                `;
+                contenedor.appendChild(hotelCard);
+            });
+        }
+        
+        document.addEventListener("DOMContentLoaded", mostrarHoteles);
+    </script>
 </body>
 </html>
+
+
